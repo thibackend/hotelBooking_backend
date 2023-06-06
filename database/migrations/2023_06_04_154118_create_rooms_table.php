@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->id();
+            $table->increments("room_id");
+            $table->foreign("type_room_id")->references('type_room_id')->on("type_rooms")->onDelete('cascade');
+            $table->foreign("hotel_id")->references('hotel_id')->on("hotels")->onDelete('cascade');
+            $table->string("room_name");
+            $table->float("price",8,2);
+            $table->longText("room_desc");
+            $table->boolean("status");
             $table->timestamps();
         });
     }

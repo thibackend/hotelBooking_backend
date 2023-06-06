@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('type_rooms', function (Blueprint $table) {
-            $table->id();
+            $table->increments('type_room_id');
+            $table->string('type_name');
+            $table->longText("type_desc");
             $table->timestamps();
         });
     }
