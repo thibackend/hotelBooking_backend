@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreign('role_id')->references("role_id")->on("users")->onDelete('cascade');
             $table->foreign("hotel_id")->references("hotel_id")->on("hotels")->onDelete('cascade')->nullable();
             $table->string("user_name");
-            $table->string("email");
+            $table->string("email")->unique();
             $table->string("password");
             $table->integer("age");
             $table->string("address");
