@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments("room_id");
-            $table->foreign("type_room_id")->references('type_room_id')->on("type_rooms")->onDelete('cascade');
-            $table->foreign("hotel_id")->references('hotel_id')->on("hotels")->onDelete('cascade');
+            $table->unsignedBigInteger("type_room_id");
+            $table->unsignedBigInteger("hotel_id");
             $table->string("room_name");
-            $table->float("price",8,2);
+            $table->float("price", 8, 2);
             $table->longText("room_desc");
             $table->boolean("status");
+            $table->foreign("type_room_id")->references('id')->on("type_rooms")->onDelete('cascade');
+            $table->foreign("hotel_id")->references('id')->on("hotels")->onDelete('cascade'); 
             $table->timestamps();
         });
     }

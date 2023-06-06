@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('user_id');
-            $table->foreign('role_id')->references("role_id")->on("users")->onDelete('cascade');
-            $table->foreign("hotel_id")->references("hotel_id")->on("hotels")->onDelete('cascade')->nullable();
+            $table->id();
+            $table->unsignedBigInteger("role_id");
+            $table->unsignedBigInteger("hotel_id");
             $table->string("user_name");
             $table->string("email")->unique();
             $table->string("password");
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string("image");
             $table->string("phone");
             $table->timestamps();
+            $table->foreign('role_id')->references("id")->on("users")->onDelete('cascade');
+            $table->foreign("hotel_id")->references("id")->on("hotels")->onDelete('cascade')->nullable();
         });
     }
 
