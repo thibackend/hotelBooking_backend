@@ -18,4 +18,4 @@ use App\Http\Controllers\ApiController;
 //     return $request->user();
 // });
 
-Route::get('/get-user',[ApiController::class,"getUser"]);
+Route::get('/user',[ApiController::class,"getUser"]);

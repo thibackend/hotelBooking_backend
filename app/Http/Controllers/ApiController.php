@@ -9,7 +9,6 @@ class ApiController extends Controller
 {
     public function getUser()
     {
-        $users = User::all();
-        return response()->json($users);
+        echo "this is api";
     }
 }
