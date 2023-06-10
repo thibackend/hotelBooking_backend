@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\hotel_booking_api\HotelController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +15,17 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+// Route::get('/get-user',[ApiController::class,"getUser"]);
+
+
+// Route::controller(HotelController::class)->group(function () {
+//     Route::get('/hotel', 'index');
+//     Route::post('/orders', 'store');
 // });
 
-Route::get('/get-user',[ApiController::class,"getUser"]);
+Route::get('/hotel',[HotelController::class,'index']);
+

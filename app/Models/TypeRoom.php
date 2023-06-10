@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TypeRoom extends Model
 {
     use HasFactory;
+    protected $type_rooms = 'type_rooms';
 }
