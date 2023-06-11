@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Role extends Model
 {
     use HasFactory;
-    protected $table = "role";
+    protected $table = "roles";
     
     /**
      * Get all of the user for the Role

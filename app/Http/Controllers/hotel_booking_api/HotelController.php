@@ -13,8 +13,8 @@ class HotelController extends Controller
      */
     public function index()
     {
-        $user = Hotel::all();
-        return response()->json($user);
+        $hotel = Hotel::all();
+        return response()->json($hotel);
     }
 
     /**
@@ -22,15 +22,22 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hotel = new Hotel();
+        $hotel->hotel_code = $request->input('hotel_code');
+        $hotel->name = $request->input('name');
+        $hotel->address = $request->input('address');
+        $hotel->hotel_desc = $request->input('hotel_desc');
+        $hotel->star=$request->input('star');
+        $saved = $hotel->save();
+        if ($saved) return response()->json(['Add hotel successful',$hotel]);
     }
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $hotel = Hotel::find($id);
+        return response()->json([$hotel]);
     }
 
     /**
@@ -38,7 +45,16 @@ class HotelController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $hotel = Hotel::find($id);
+        $hotel->hotel_code = $request->input('hotel_code');
+        $hotel->name = $request->input('name');
+        $hotel->address = $request->input('address');
+        $hotel->hotel_desc = $request->input('hotel_desc');
+        $hotel->star=$request->input('star');
+        $updated = $hotel->save();
+        if ($updated) return response()->json(['Update hotel successful',$hotel]);
+        
+
     }
 
     /**
@@ -46,6 +62,11 @@ class HotelController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $hotel = Hotel::find($id);
+        $deleted = $hotel->delete();
+
+        if ($deleted) :
+            return response()->json(['mess'=>"Delete successful", "data"=>$hotel]);
+        endif;
     }
 }

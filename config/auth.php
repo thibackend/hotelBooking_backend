@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ]
     ],
 
     /*
@@ -98,11 +102,11 @@ return [
             'throttle' => 60,
         ],
     ],
-    'api' => [
-        'driver' => 'jwt',
-        'provider' => 'users',
-        'hash' => false,
-    ],
+    // 'api' => [
+    //     'driver' => 'jwt',
+    //     'provider' => 'users',
+    //     'hash' => false,
+    // ],
 
     /*
     |--------------------------------------------------------------------------

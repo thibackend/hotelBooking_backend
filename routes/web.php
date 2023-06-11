@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\hotel_booking_api\HotelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth:api'], function () {
+    // Routes requiring authentication with 'web' and 'admin' guards
+    Route::get('/user', [HotelController::class,"index"]);
 });
