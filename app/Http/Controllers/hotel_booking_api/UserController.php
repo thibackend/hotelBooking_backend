@@ -33,10 +33,8 @@ class UserController extends Controller
         $users->address =$request->input("address");
         $users->image =$request->input("image");
         $users->phone =$request->input("phone");
-
         $users ->save();
-
-        if($users->save()) return response()->json("Successfull");
+        if($users->save()) return response()->json(["mes"=>"successful","data"=>$users]);
         
     }
 
