@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("type_room_id");
             $table->unsignedBigInteger("hotel_id");
-            $table->string("room_name");
-            $table->float("price", 8, 2);
-            $table->longText("room_desc");
+            $table->string("name");
+            $table->float("price");
+            $table->longText("desc");
             $table->boolean("status");
             $table->foreign("type_room_id")->references('id')->on("type_rooms")->onDelete('cascade');
             $table->foreign("hotel_id")->references('id')->on("hotels")->onDelete('cascade'); 

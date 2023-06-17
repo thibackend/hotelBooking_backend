@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("role_id");
             $table->unsignedBigInteger("hotel_id")->nullable();
-            $table->string("user_name");
+            $table->string("user_name")->unique();
             $table->string("email")->unique();
             $table->string("password");
             $table->integer("age");
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->foreign("hotel_id")->references("id")->on("hotels")->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */

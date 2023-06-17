@@ -89,4 +89,4 @@ Route::controller(BookingController::class)
 
 
 
-// Route::get('/hotel',[HotelController::class,'index']);
+Route::get('/getuser',[ApiController::class,'getUser']);
