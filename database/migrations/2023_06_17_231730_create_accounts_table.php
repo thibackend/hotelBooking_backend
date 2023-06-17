@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string("user_name");
             $table->string("email");
             $table->string("password");
-            $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
+            $table->timestamps();
         });
     }
 

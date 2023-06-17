@@ -20,7 +20,7 @@ class AccountSeeder extends Seeder
         foreach ($users as $key => $value) {
             $user = Users::find($value);
             accounts::create([
-                'user_id' => $user->$value,
+                'user_id' => $user->id,
                 'user_name' => $user->user_name,
                 'email' =>$user->email,
                 'password' =>$user->password// Bạn có thể sửa đổi giá trị mật khẩu tại đây

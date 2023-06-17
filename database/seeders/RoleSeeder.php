@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         for ($i = 0; $i < 5; $i++) {
             Role::create([
                 'name' => $faker->word(),
-                'desc' => $faker->paragraph(),
+                'desc' => $faker->paragraph(1,true),
             ]);
         }
     }
