@@ -5,7 +5,6 @@ namespace App\Http\Controllers\hotel_booking_api;
 use App\Http\Controllers\Controller;
 use App\Models\TypeRoom;
 use Illuminate\Http\Request;
-use Mockery\Matcher\Type;
 
 class TypeRoomController extends Controller
 {
@@ -25,8 +24,8 @@ class TypeRoomController extends Controller
     {
         $typeroom = new TypeRoom();
         $typeroom->id = $request->input('id');
-        $typeroom->type_name = $request->input('type_name');
-        $typeroom->type_desc = $request->input('type_desc');
+        $typeroom->name = $request->input('name');
+        $typeroom->desc = $request->input('desc');
         $typeroom->save();
         return response()->json(["msg"=>"Add successfull", "data"=>$typeroom]);
     }
@@ -46,8 +45,8 @@ class TypeRoomController extends Controller
     public function update(Request $request, string $id)
     {
         $typeroom =TypeRoom::find($id);
-        $typeroom->type_name = $request->input('type_name');
-        $typeroom->type_desc = $request->input('type_desc');
+        $typeroom->name = $request->input('name');
+        $typeroom->desc = $request->input('desc');
         $typeroom->save();
         return response()->json(["msg"=>"Upadate successfull", "data"=>$typeroom]);
     }

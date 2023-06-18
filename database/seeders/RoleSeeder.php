@@ -15,7 +15,6 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-
         // Tạo dữ liệu giả cho 5 vai trò
         for ($i = 0; $i < 5; $i++) {
             Role::create([

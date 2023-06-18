@@ -32,6 +32,7 @@ class HotelController extends Controller
         $saved = $hotel->save();
         if ($saved) return response()->json(['Add hotel successful', $hotel], 201);
     }
+    
     /**
      * Display the specified resource.
      */
@@ -42,7 +43,7 @@ class HotelController extends Controller
         if (!$hotel) {
             return response()->json(['error' => 'Hotel not found'], 404);
         }
-        return response()->json([$hotel]);
+        return response()->json($hotel);
     }
 
     /**
@@ -76,6 +77,6 @@ class HotelController extends Controller
     
         $hotel->delete();
     
-        return response()->json(['message' => 'Hotel deleted']);
+        return response()->json(['message' => 'Hotel deleted',$hotel]);
     }
 }

@@ -20,24 +20,14 @@ class RoomController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // $table->id();
-    // $table->unsignedBigInteger("type_room_id");
-    // $table->unsignedBigInteger("hotel_id");
-    // $table->string("room_name");
-    // $table->float("price", 8, 2);
-    // $table->longText("room_desc");
-    // $table->boolean("status");
-    // $table->foreign("type_room_id")->references('id')->on("type_rooms")->onDelete('cascade');
-    // $table->foreign("hotel_id")->references('id')->on("hotels")->onDelete('cascade'); 
-    // $table->timestamps();
     public function store(Request $request)
     {
         $room = new Room();
         $room->type_room_id = $request->input("type_room_id");
         $room->hotel_id = $request->input("hotel_id");
-        $room->room_name = $request->input("room_name");
+        $room->name = $request->input("name");
         $room->price = $request->input("price");
-        $room->room_desc = $request->input("room_desc");
+        $room->desc = $request->input("desc");
         $room->status = $request->input("status");
         $room->save();
         return response()->json(["msg"=> "Add successful","data"=>$room]);
@@ -61,9 +51,10 @@ class RoomController extends Controller
         $room = Room::find($id);
         $room->type_room_id = $request->input("type_room_id");
         $room->hotel_id = $request->input("hotel_id");
-        $room->room_name = $request->input("room_name");
+        $room->name = $request->input("name");
         $room->price = $request->input("price");
-        $room->room_desc = $request->input("room_desc");
+        $room->desc = $request->input("desc");
+        $room->status = $request->input("status");
         $room->save();
         return response()->json(["msg"=> "update successful","data"=>$room]);
         
