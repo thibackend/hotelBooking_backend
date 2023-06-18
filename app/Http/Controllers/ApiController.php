@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Hotel;
+use App\Models\Room;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function getUser()
+    public function Notfound()
     {
-        $users = User::all();
-        return response()->json($users);
+        return response()->json(["msg"=>"api url not found"],404);
+
+
     }
 }

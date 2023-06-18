@@ -25,10 +25,10 @@ class RoleController extends Controller
     {
         $role = new Role();
         $role->id = $request->input("id");
-        $role->role_name = $request->input("role_name");
-        $role->role_desc = $request->input("role_desc");
+        $role->name = $request->input("name");
+        $role->desc = $request->input("desc");
         $role->save();
-        return response()->json(["msg" => "Successfull"]);
+        return response()->json(["msg" => "Successfull",$role]);
     }
 
     /**
@@ -47,8 +47,8 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $role->id = $request->input("id");
-        $role->role_name = $request->input("role_name");
-        $role->role_desc = $request->input("role_desc");
+        $role->name = $request->input("name");
+        $role->desc = $request->input("desc");
         $role->save();
         return response()->json(["msg"=>"update successful","data"=>$role]);
     }
@@ -60,6 +60,6 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $role ->delete();
-        return response()->json(["msg"=>"delete Successful"]);
+        return response()->json(["msg"=>"delete Successful",$role]);
     }
 }

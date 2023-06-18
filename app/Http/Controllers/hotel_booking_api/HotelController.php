@@ -23,21 +23,27 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         $hotel = new Hotel();
-        $hotel->hotel_code = $request->input('hotel_code');
         $hotel->name = $request->input('name');
         $hotel->address = $request->input('address');
-        $hotel->hotel_desc = $request->input('hotel_desc');
-        $hotel->star=$request->input('star');
+        $hotel->contact = $request->input('contact');
+        $hotel->desc = $request->input('desc');
+        $hotel->star = $request->input('star');
+        $hotel->status = $request->input('status');
         $saved = $hotel->save();
-        if ($saved) return response()->json(['Add hotel successful',$hotel]);
+        if ($saved) return response()->json(['Add hotel successful', $hotel], 201);
     }
+    
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         $hotel = Hotel::find($id);
-        return response()->json([$hotel]);
+
+        if (!$hotel) {
+            return response()->json(['error' => 'Hotel not found'], 404);
+        }
+        return response()->json($hotel);
     }
 
     /**
@@ -46,15 +52,17 @@ class HotelController extends Controller
     public function update(Request $request, string $id)
     {
         $hotel = Hotel::find($id);
-        $hotel->hotel_code = $request->input('hotel_code');
+        if (!$hotel) {
+            return response()->json(['error' => 'Hotel not found'], 404);
+        }
         $hotel->name = $request->input('name');
         $hotel->address = $request->input('address');
-        $hotel->hotel_desc = $request->input('hotel_desc');
-        $hotel->star=$request->input('star');
-        $updated = $hotel->save();
-        if ($updated) return response()->json(['Update hotel successful',$hotel]);
-        
-
+        $hotel->contact = $request->input('contact');
+        $hotel->desc = $request->input('desc');
+        $hotel->star = $request->input('star');
+        $hotel->status = $request->input('status');
+        $hotel->save();
+        return response()->json($hotel);
     }
 
     /**
@@ -63,10 +71,12 @@ class HotelController extends Controller
     public function destroy(string $id)
     {
         $hotel = Hotel::find($id);
-        $deleted = $hotel->delete();
-
-        if ($deleted) :
-            return response()->json(['mess'=>"Delete successful", "data"=>$hotel]);
-        endif;
+        if (!$hotel) {
+            return response()->json(['error' => 'Hotel not found'], 404);
+        }
+    
+        $hotel->delete();
+    
+        return response()->json(['message' => 'Hotel deleted',$hotel]);
     }
 }

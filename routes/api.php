@@ -3,12 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\HotelController;
 use App\Http\Controllers\hotel_booking_api\RoleController;
 use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\TypeRoomController;
 use App\Http\Controllers\hotel_booking_api\UserController;
+use App\Http\Controllers\hotel_booking_api\AccountController;
+use App\Http\Controllers\hotel_booking_api\BookingController;
+use App\Http\Controllers\hotel_booking_api\CommentController;
+use App\Http\Controllers\hotel_booking_api\HotelImageController;
+use App\Http\Controllers\hotel_booking_api\RoomImageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,7 +32,7 @@ use App\Http\Controllers\hotel_booking_api\UserController;
 // Route::get('/get-user',[ApiController::class,"getUser"]);
 
 
-Route::controller(HotelController::class)
+Route::controller(HotelController::class) // đã xữ lý xong
     ->group(function () {
         Route::get('/hotels', 'index');
         Route::get('/hotels/{id}', 'show');
@@ -36,18 +41,20 @@ Route::controller(HotelController::class)
         Route::delete('/hotels/{id}', 'destroy');
     });
 
-
-
-Route::controller(RoleController::class)
+Route::controller(HotelImageController::class) // xữ lý xong.
     ->group(function () {
-        Route::get('/roles', 'index');
-        Route::get('/roles/{id}', 'show');
-        Route::post('/roles', 'store');
-        Route::put('/roles/{id}', 'update');
-        Route::delete('/roles/{id}', 'destroy');
+        Route::get('/hotel_images', 'index');
+        Route::get('/hotel_images/{id}', 'show');
+        Route::post('/hotel_images', 'store');
+        Route::put('/hotel_images/{id}', 'update');
+        Route::delete('/hotel_images/{id}', 'destroy');
     });
 
-Route::controller(TypeRoomController::class)
+
+
+
+
+Route::controller(TypeRoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/type_rooms', "index");
         Route::get('/type_rooms/{id}', 'show');
@@ -56,7 +63,7 @@ Route::controller(TypeRoomController::class)
         Route::delete('/type_rooms/{id}', 'destroy');
     });
 
-Route::controller(RoomController::class)
+Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/rooms', "index");
         Route::get('/rooms/{id}', 'show');
@@ -64,17 +71,51 @@ Route::controller(RoomController::class)
         Route::put('/rooms/{id}', 'update');
         Route::delete('/rooms/{id}', 'destroy');
     });
+Route::controller(RoomImageController::class)  // xữ lý xong
+    ->group(function () {
+        Route::get('/room_images', "index");
+        Route::get('/room_images/{id}', 'show');
+        Route::post('/room_images', "store");
+        Route::put('/room_images/{id}', 'update');
+        Route::delete('/room_images/{id}', 'destroy');
+    });
 
-
-
-
-Route::controller(UserController::class)
+Route::controller(RoleController::class)  //xữ lý xong
+    ->group(function () {
+        Route::get('/roles', 'index');
+        Route::get('/roles/{id}', 'show');
+        Route::post('/roles', 'store');
+        Route::put('/roles/{id}', 'update');
+        Route::delete('/roles/{id}', 'destroy');
+    });
+Route::controller(UserController::class) //xữ lý xong
     ->group(function () {
         Route::get('/users', "index");
         Route::get('/users/{id}', 'show');
         Route::post('/users', "store");
         Route::put('/users/{id}', 'update');
         Route::delete('/users/{id}', 'destroy');
+    });
+
+
+
+
+Route::controller(AccountController::class) //xữ lý xong
+    ->group(function () {
+        Route::get('/accounts', "index");
+        Route::get('/accounts/{id}', 'show');
+        Route::post('/accounts', "store");
+        Route::put('/accounts/{id}', 'update');
+        Route::delete('/accounts/{id}', 'destroy');
+    });
+
+Route::controller(CommentController::class)  
+    ->group(function () {
+        Route::get('/comments', "index");
+        Route::get('/comments/{id}', 'show');
+        Route::post('/comments', "store");
+        Route::put('/comments/{id}', 'update');
+        Route::delete('/comments/{id}', 'destroy');
     });
 
 
@@ -87,6 +128,5 @@ Route::controller(BookingController::class)
         Route::delete('/bookings/{id}', 'destroy');
     });
 
-
-
-// Route::get('/hotel',[HotelController::class,'index']);
+Route::get('/*', [ApiController::class, 'NotFound']);
+Route::any('{any}', [ApiController::class, 'NotFound'])->where('any', '.*');
