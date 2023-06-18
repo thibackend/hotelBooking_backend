@@ -128,5 +128,4 @@ Route::controller(BookingController::class)
         Route::delete('/bookings/{id}', 'destroy');
     });
 
-Route::get('/*', [ApiController::class, 'NotFound']);
 Route::any('{any}', [ApiController::class, 'NotFound'])->where('any', '.*');

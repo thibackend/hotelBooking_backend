@@ -19,7 +19,7 @@ class TypeRoomSeeder extends Seeder
         for ($i = 0; $i < 5; $i++) {
             TypeRoom::create([
                 'name' => $faker->word(),
-                'desc' => $faker->paragraph(),
+                'desc' => $faker->paragraph(1,true),
             ]);
         }
     }
