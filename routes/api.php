@@ -37,8 +37,7 @@ Route::controller(HotelController::class)
     });
 
 
-
-Route::controller(RoleController::class)
+Route::controller(RoleController::class) 
     ->group(function () {
         Route::get('/roles', 'index');
         Route::get('/roles/{id}', 'show');

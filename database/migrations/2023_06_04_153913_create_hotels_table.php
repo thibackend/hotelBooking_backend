@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->longText("hotel_desc");
             $table->integer("star");
+            $table->string("image");
             $table->timestamps();
         });
     }
