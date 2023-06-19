@@ -39,6 +39,7 @@ Route::controller(HotelController::class) // đã xữ lý xong
         Route::post('/hotels', 'store');
         Route::put('/hotels/{id}', 'update');
         Route::delete('/hotels/{id}', 'destroy');
+        Route::get('/hotels/{id}', 'detail');
     });
 
 Route::controller(HotelImageController::class) // xữ lý xong.
@@ -49,8 +50,6 @@ Route::controller(HotelImageController::class) // xữ lý xong.
         Route::put('/hotel_images/{id}', 'update');
         Route::delete('/hotel_images/{id}', 'destroy');
     });
-
-
 
 
 

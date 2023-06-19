@@ -79,4 +79,15 @@ class HotelController extends Controller
     
         return response()->json(['message' => 'Hotel deleted',$hotel]);
     }
+
+    public function detail($id)
+    {
+        $detailHotel = Hotel::select('hotel_images.image', 'hotels.name', 'hotels.address', 'hotels.desc', 'hotels.star', 'hotels.contact')
+            ->join('hotel_images', 'hotels.id', '=', 'hotel_images.hotel_id')
+            ->where('hotels.id', $id)
+            ->distinct()
+            ->get();
+
+        return response()->json($detailHotel);
+    }
 }
