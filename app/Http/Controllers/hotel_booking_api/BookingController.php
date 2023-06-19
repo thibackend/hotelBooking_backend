@@ -58,13 +58,15 @@ class BookingController extends Controller
         $booking->save();
         return response()->json(["msg" => "update successful", "data" => $booking]);
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $booking = Booking::find($id);
+        if(!$booking){
+        return response()->json(["msg" => "booking not found"]);
+        }
         $booking->delete();
         return response()->json(["msg" => "delete successful", "data" => $booking]);
     }

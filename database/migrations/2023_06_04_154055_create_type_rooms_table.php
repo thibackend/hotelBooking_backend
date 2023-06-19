@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('type_rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('type_name');
-            $table->longText("type_desc");
+            $table->string('name');
+            $table->string("desc");
             $table->timestamps();
         });
     }
