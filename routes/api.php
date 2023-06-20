@@ -9,11 +9,11 @@ use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\TypeRoomController;
 use App\Http\Controllers\hotel_booking_api\UserController;
 use App\Http\Controllers\hotel_booking_api\AccountController;
+use App\Http\Controllers\hotel_booking_api\AuthController;
 use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\CommentController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,6 +34,7 @@ use App\Http\Controllers\hotel_booking_api\RoomImageController;
 
 Route::controller(HotelController::class) // đã xữ lý xong
     ->group(function () {
+        Route::get('/hotel_and_images', 'hotel_images');
         Route::get('/hotels', 'index');
         Route::get('/hotels/{id}', 'show');
         Route::post('/hotels', 'store');
@@ -108,7 +109,7 @@ Route::controller(AccountController::class) //xữ lý xong
         Route::delete('/accounts/{id}', 'destroy');
     });
 
-Route::controller(CommentController::class)  
+Route::controller(CommentController::class)
     ->group(function () {
         Route::get('/comments', "index");
         Route::get('/comments/{id}', 'show');
@@ -127,4 +128,5 @@ Route::controller(BookingController::class)
         Route::delete('/bookings/{id}', 'destroy');
     });
 
+Route::post('/login', [AuthController::class, 'Login']);
 Route::any('{any}', [ApiController::class, 'NotFound'])->where('any', '.*');
