@@ -19,7 +19,7 @@ class BookingSeeder extends Seeder
         $user_ids = Users::pluck('id')->all();
         // Tạo dữ liệu giả cho 100 bookings
         $hotel_ids = Hotel::pluck('id')->all();
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $hotel_id = $faker->randomElement($hotel_ids);
             $rooms = Room::where('hotel_id', $hotel_id)->pluck('id')->all();
             $take = count($rooms);

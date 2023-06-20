@@ -18,11 +18,7 @@ return new class extends Migration
             $table->string('contact');
             $table->longText("desc");
             $table->integer("star");
-
-            $table->string("image");
-
             $table->tinyInteger("status");
-
             $table->timestamps();
         });
     }

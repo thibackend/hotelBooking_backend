@@ -4,6 +4,7 @@ namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
+use App\Models\hotel_images;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -14,7 +15,8 @@ class HotelController extends Controller
     public function index()
     {
         $hotel = Hotel::all();
-        return response()->json($hotel);
+        $hotelImages =hotel_images::all();
+        return response()->json(["hotels"=>$hotel, "images"=>$hotelImages]);
     }
 
     /**
@@ -30,7 +32,7 @@ class HotelController extends Controller
         $hotel->star = $request->input('star');
         $hotel->status = $request->input('status');
         $saved = $hotel->save();
-        if ($saved) return response()->json(['Add hotel successful', $hotel], 201);
+        if ($saved) return response()->json(['Add hotel successful', $hotel]);
     }
     
     /**

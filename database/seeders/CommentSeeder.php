@@ -21,7 +21,7 @@ class CommentSeeder extends Seeder
         $account_ids = accounts::pluck('id')->all();
         $hotel_ids = Hotel::pluck('id')->all();
         // Tạo dữ liệu giả cho 100 comments
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             comments::create([
                 'comment' => $faker->paragraph(),
                 'account_id' => $faker->randomElement($account_ids),

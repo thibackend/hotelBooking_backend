@@ -18,7 +18,7 @@ class HotelImageSeeder extends Seeder
         $hotels = Hotel::pluck('id')->all();
 
         // Tạo dữ liệu giả cho 50 hình ảnh khách sạn
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i <25; $i++) {
             hotel_images::create([
                 'image' => $faker->imageUrl(),
                 'hotel_id' => $faker->randomElement($hotels),
