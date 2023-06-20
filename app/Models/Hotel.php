@@ -9,4 +9,8 @@ class Hotel extends Model
 {
     use HasFactory;
     protected $hotels = 'hotels';
+
+    public function image() {
+        return $this->hasMany(hotel_images::class);
+    }
 }

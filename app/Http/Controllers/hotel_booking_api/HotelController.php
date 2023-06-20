@@ -10,7 +10,38 @@ class HotelController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
      */
+
+
+    //  Route::get('/hotel_images', 'hotel_images');
+    public function hotel_images()
+    {
+        $dataHotel_images = [];
+        $hotels = Hotel::all();
+        foreach ($hotels as $key => $value) {
+            $hotel = Hotel::find($key + 1);
+            $images = $hotel->image()->where('hotel_id', $hotel->id)->pluck('image');
+            array_push(
+                $dataHotel_images,
+                [
+                    "id" => $hotel->id,
+                    "image" => $images,
+                    "name"=> $hotel->name,
+                    "contact"=> $hotel->contact,
+                    "desc"=> $hotel->desc,
+                    "star"=> $hotel->star,
+                    "status"=> $hotel->status,
+                    ]
+            );
+        }
+        return response()->json($dataHotel_images);
+    }
+
+
+
+
+
     public function index()
     {
         $hotel = Hotel::all();
@@ -32,7 +63,7 @@ class HotelController extends Controller
         $saved = $hotel->save();
         if ($saved) return response()->json(['Add hotel successful', $hotel], 201);
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -74,9 +105,9 @@ class HotelController extends Controller
         if (!$hotel) {
             return response()->json(['error' => 'Hotel not found'], 404);
         }
-    
+
         $hotel->delete();
-    
-        return response()->json(['message' => 'Hotel deleted',$hotel]);
+
+        return response()->json(['message' => 'Hotel deleted', $hotel]);
     }
 }

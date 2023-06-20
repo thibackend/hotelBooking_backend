@@ -34,6 +34,7 @@ use App\Http\Controllers\hotel_booking_api\RoomImageController;
 
 Route::controller(HotelController::class) // đã xữ lý xong
     ->group(function () {
+        Route::get('/hotel_and_images', 'hotel_images');
         Route::get('/hotels', 'index');
         Route::get('/hotels/{id}', 'show');
         Route::post('/hotels', 'store');

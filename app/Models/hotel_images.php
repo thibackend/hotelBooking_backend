@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class hotel_images extends Model
 {
     use HasFactory;
+    protected $hotel_images = 'hotel_images';
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
 }
