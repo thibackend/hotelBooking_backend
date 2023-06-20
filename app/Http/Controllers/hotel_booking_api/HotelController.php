@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hotel_booking_api;
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Mockery\Undefined;
 
 class HotelController extends Controller
 {
@@ -27,15 +28,37 @@ class HotelController extends Controller
                 [
                     "id" => $hotel->id,
                     "image" => $images,
-                    "name"=> $hotel->name,
-                    "contact"=> $hotel->contact,
-                    "desc"=> $hotel->desc,
-                    "star"=> $hotel->star,
-                    "address"=>$hotel->address,
-                    "status"=> $hotel->status,
-                    ]
+                    "name" => $hotel->name,
+                    "contact" => $hotel->contact,
+                    "desc" => $hotel->desc,
+                    "star" => $hotel->star,
+                    "address" => $hotel->address,
+                    "status" => $hotel->status,
+                ]
             );
         }
+        return response()->json($dataHotel_images);
+    }
+
+    public function getOne_hotel_images(string $id)
+    {
+        $dataHotel_images = [];
+        $hotel = Hotel::find($id);
+        if(!$hotel) return response()->json(null);
+        $images = $hotel->image()->where('hotel_id', $hotel->id)->pluck('image')->all();
+        array_push(
+            $dataHotel_images,
+            [
+                "id" => $hotel->id,
+                "image" => $images,
+                "name" => $hotel->name,
+                "contact" => $hotel->contact,
+                "desc" => $hotel->desc,
+                "star" => $hotel->star,
+                "address" => $hotel->address,
+                "status" => $hotel->status,
+            ]
+        );
         return response()->json($dataHotel_images);
     }
 
