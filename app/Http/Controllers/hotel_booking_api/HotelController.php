@@ -82,12 +82,26 @@ class HotelController extends Controller
 
     public function detail($id)
     {
-        $detailHotel = Hotel::select('hotel_images.image', 'hotels.name', 'hotels.address', 'hotels.desc', 'hotels.star', 'hotels.contact')
+        $detailHotel = Hotel::select('hotels.name', 'hotels.address', 'hotels.desc', 'hotels.star', 'hotels.contact', 'hotel_images.image')
             ->join('hotel_images', 'hotels.id', '=', 'hotel_images.hotel_id')
             ->where('hotels.id', $id)
-            ->distinct()
             ->get();
 
-        return response()->json($detailHotel);
+        // Xử lý dữ liệu
+        $result = [
+            'name' => $detailHotel[0]->name,
+            'address' => $detailHotel[0]->address,
+            'desc' => $detailHotel[0]->desc,
+            'star' => $detailHotel[0]->star,
+            'contact' => $detailHotel[0]->contact,
+            'images' => []
+        ];
+
+        foreach ($detailHotel as $hotel) {
+            $result['images'][] = $hotel->image;
+        }
+
+        return response()->json($result);
     }
+
 }
