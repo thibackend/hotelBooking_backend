@@ -31,6 +31,7 @@ class HotelController extends Controller
                     "contact"=> $hotel->contact,
                     "desc"=> $hotel->desc,
                     "star"=> $hotel->star,
+                    "address"=>$hotel->address,
                     "status"=> $hotel->status,
                     ]
             );
