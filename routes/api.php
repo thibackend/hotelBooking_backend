@@ -66,6 +66,7 @@ Route::controller(TypeRoomController::class)  // xữ lý xong
 
 Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
+        Route::get('/room_and_images/{hotelID}', "get_room_in_a_hotel");
         Route::get('/rooms', "index");
         Route::get('/rooms/{id}', 'show');
         Route::post('/rooms', "store");
