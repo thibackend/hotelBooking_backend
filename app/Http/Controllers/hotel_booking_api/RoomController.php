@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hotel;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use PHPUnit\Event\Test\TestStubForIntersectionOfInterfacesCreated;
 
 class RoomController extends Controller
 {
@@ -14,7 +16,42 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
+        foreach ($rooms as $key => $value) {
+        }
         return response()->json($rooms);
+    }
+
+    public function get_room_in_a_hotel(string $hotelID)
+    {
+
+        if ($hotelID) {
+            $rooms = Room::where('hotel_id', $hotelID)->get();
+            $a = [] || null;
+            foreach ($rooms as $key => $value) {
+                $roomImages = $value->Image()->get();
+                $a = $roomImages;
+            }
+            if ($a) {
+                $rooms_and_images = [];
+                foreach ($rooms as $value) {
+                    $room = Room::find($value->id);
+                    $imagesBelongRoomId = $room->Image()->where("room_id", $room->id)->pluck('image')->all();
+                    array_push($rooms_and_images, [
+                        "id" => $value->id,
+                        "name" => $room->name,
+                        "type_room_id" => $room->type_room_id,
+                        "hotel_id" => $room->hotel_id,
+                        "price" => $room->price,
+                        "desc" => $room->desc,
+                        "status" => $room->status,
+                        "image" => $imagesBelongRoomId
+                    ]);
+                }
+                return response()->json($rooms_and_images);
+            } else {
+                return response()->json(['Notfound' => " Hotel has ID:  $hotelID"]);
+            }
+        }
     }
 
     /**
@@ -30,8 +67,7 @@ class RoomController extends Controller
         $room->desc = $request->input("desc");
         $room->status = $request->input("status");
         $room->save();
-        return response()->json(["msg"=> "Add successful","data"=>$room]);
-        
+        return response()->json(["msg" => "Add successful", "data" => $room]);
     }
 
     /**
@@ -56,8 +92,7 @@ class RoomController extends Controller
         $room->desc = $request->input("desc");
         $room->status = $request->input("status");
         $room->save();
-        return response()->json(["msg"=> "update successful","data"=>$room]);
-        
+        return response()->json(["msg" => "update successful", "data" => $room]);
     }
 
     /**
@@ -67,6 +102,6 @@ class RoomController extends Controller
     {
         $room = Room::find($id);
         $room->delete();
-        return response()->json(["msg"=> "Delete successful","data"=>$room]);
+        return response()->json(["msg" => "Delete successful", "data" => $room]);
     }
 }

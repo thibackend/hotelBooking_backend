@@ -22,7 +22,7 @@ class RoomSeeder extends Seeder
         $typeRooms = TypeRoom::pluck('id')->all();
         $hotels = Hotel::pluck('id')->all();
         // Tạo dữ liệu giả cho 50 phòng
-        for ($i = 0; $i <30; $i++) {
+        for ($i = 0; $i <50; $i++) {
             Room::create([
                 'type_room_id' => $faker->randomElement($typeRooms),
                 'hotel_id' => $faker->randomElement($hotels),
