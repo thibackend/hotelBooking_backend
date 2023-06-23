@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
+use App\Models\Users;
 use Faker\Factory as Faker;
 
 class RoleSeeder extends Seeder
@@ -16,11 +17,39 @@ class RoleSeeder extends Seeder
     {
         $faker = Faker::create();
         // Tạo dữ liệu giả cho 5 vai trò
-        for ($i = 0; $i < 5; $i++) {
-            Role::create([
-                'name' => $faker->word(),
-                'desc' => $faker->paragraph(1,true),
-            ]);
-        }
+        $roles = [
+            [
+                'name' => "Manager",
+                "desc" => "manager booking when user book in their company"
+            ],
+            [
+                'name' => "User",
+                "desc" => "Users in web they can booking room"
+            ],
+        ];
+
+        $role = Role::all();
+        if ($role) :
+            foreach ($role as $r) {
+                $users = Users::where('role_id', $r->id)->get();
+                foreach ($users as $user) {
+                    $user->delete();
+                }
+                $r->delete();
+            }
+            foreach ($roles as $key => $value) {
+                Role::create([
+                    'name' => $value["name"],
+                    'desc' => $value["desc"],
+                ]);
+            }
+        else :
+            foreach ($roles as $key => $value) {
+                Role::create([
+                    'name' => $value["name"],
+                    'desc' => $value["desc"],
+                ]);
+            }
+        endif;
     }
 }
