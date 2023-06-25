@@ -54,7 +54,6 @@ Route::controller(HotelImageController::class) // xữ lý xong.
     });
 
 
-
 Route::controller(TypeRoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/type_rooms', "index");
