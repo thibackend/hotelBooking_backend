@@ -20,14 +20,11 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             // Các seeder khác...
-            TypeRoomSeeder::class,
-            HotelSeeder::class,
-            RoleSeeder::class,
+            CategorySeeder::class,
             RoomSeeder::class,
             HotelImageSeeder::class,
             RoomImageSeeder::class,
             UserSeeder::class,
-            AccountSeeder::class,
             CommentSeeder::class,
             BookingSeeder::class,
         ]);

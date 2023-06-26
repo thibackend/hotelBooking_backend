@@ -9,9 +9,4 @@ class hotel_images extends Model
 {
     use HasFactory;
     protected $hotel_images = 'hotel_images';
-
-    public function hotel()
-    {
-        return $this->belongsTo(Hotel::class);
-    }
 }
