@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('rooms_services', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string('desc',250);
+            $table->integer("room_id")->unsigned();
+            $table->integer("service_id")->unsigned();
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('rooms_services');
     }
 };

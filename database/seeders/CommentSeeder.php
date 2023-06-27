@@ -6,8 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\comments;
-use App\Models\Hotel;
-use App\Models\accounts;
+use App\Models\Room;
+use App\Models\Users;
 
 class CommentSeeder extends Seeder
 {
@@ -18,14 +18,14 @@ class CommentSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $account_ids = accounts::pluck('id')->all();
-        $hotel_ids = Hotel::pluck('id')->all();
+        $user_ids  = Users::pluck('id')->all();
+        $room_ids  = Room::pluck('id')->all();
         // Tạo dữ liệu giả cho 100 comments
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             comments::create([
-                'comment' => $faker->paragraph(),
-                'account_id' => $faker->randomElement($account_ids),
-                'hotel_id' =>$faker->randomElement($hotel_ids),
+                'content' => $faker->paragraph(3,true),
+                'user_id' => $faker->randomElement($user_ids),
+                'room_id' =>$faker->randomElement($room_ids),
             ]);
         }
     }

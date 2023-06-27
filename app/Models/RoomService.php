@@ -5,8 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class accounts extends Model
+class RoomService extends Model
 {
     use HasFactory;
-    protected $accounts = "accounts";
+    protected $table = 'rooms_services';
+
+    protected $fillable=[
+        "room_id",
+        "service_id"
+    ];
 }
