@@ -83,9 +83,8 @@ class RoomImageController extends Controller
         $roomImage->update([
             'room_id' => $request->room_id,
             'image_path' => $request->image_path,
-            'desc' => $request->desc,
+            'desc' => $request->desc
         ]);
-
         return response()->json($roomImage);
     }
 

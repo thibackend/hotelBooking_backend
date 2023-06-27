@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class comments extends Model
+class RoomService extends Model
 {
     use HasFactory;
-    protected $comments = 'comments';
-    protected $fillable = [
-        "content",
-        "room_id",
-        "user_id"
-    ];
+    protected $table = 'rooms_services';
 
+    protected $fillable=[
+        "room_id",
+        "service_id"
+    ];
 }

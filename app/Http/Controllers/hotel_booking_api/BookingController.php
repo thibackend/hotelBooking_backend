@@ -13,26 +13,18 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $booking = Booking::all();
-        return response()->json($booking);
+        return Booking::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(Request $request)
     {
-        $booking = new Booking();
-        $booking->id = $request->input("id");
-        $booking->hotel_id = $request->input("hotel_id");
-        $booking->user_id = $request->input("user_id");
-        $booking->room_id = $request->input("room_id");
-        $booking->booking_date = $request->input("booking_date");
-        $booking->check_out_date = $request->input("check_out_date");
-        $booking->save();
-
-        return response()->json(["msg" => "Add successful", "data" => $booking]);
+        $booking = Booking::create(
+            $request->all()
+        );
+        return $booking;
     }
 
     /**
@@ -40,8 +32,8 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        $booking = Booking::find($id);
-        return response()->json($booking);
+        $booking = Booking::findOrFail($id);
+        return $booking;
     }
 
     /**
@@ -49,25 +41,19 @@ class BookingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $booking = Booking::find($id);
-        $booking->hotel_id = $request->input("hotel_id");
-        $booking->user_id = $request->input("user_id");
-        $booking->room_id = $request->input("room_id");
-        $booking->booking_date = $request->input("booking_date");
-        $booking->check_out_date = $request->input("check_out_date");
-        $booking->save();
-        return response()->json(["msg" => "update successful", "data" => $booking]);
+        $booking = Booking::findOrFail($id);
+        $bookinng =$booking->update($request->all());
+        return $booking;
     }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $booking = Booking::find($id);
-        if(!$booking){
-        return response()->json(["msg" => "booking not found"]);
-        }
-        $booking->delete();
-        return response()->json(["msg" => "delete successful", "data" => $booking]);
+        $booking = Booking::findOrFail($id);
+        $delete =$booking ->delete();
+        return response()->json($delete);
+        
     }
 }

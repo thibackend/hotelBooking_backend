@@ -10,10 +10,11 @@ use App\Http\Controllers\hotel_booking_api\CommentController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserInforController;
 use App\Http\Controllers\hotel_booking_api\InforUserController;
+use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +110,7 @@ Route::controller(Hotel_booking_apiUserInforController::class) //xữ lý xong
         Route::delete('/users/{id}', 'destroy');
     });
 
-    Route::controller(CategoryController::class)  // xữ lý xong
+Route::controller(CategoryController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/categories', "index");
         Route::get('/categories/{id}', 'show');
@@ -118,13 +119,34 @@ Route::controller(Hotel_booking_apiUserInforController::class) //xữ lý xong
         Route::delete('/categories/{id}', 'destroy');
     });
 
-    Route::group(['prefix' => 'services'], function () {
-        Route::get('/', [ServiceController::class,'index']);
-        Route::post('/', [ServiceController::class,'store']);
-        Route::get('/{id}', [ServiceController::class,'show']);
-        Route::put('/{id}', [ServiceController::class,'update']);
-        Route::delete('/{id}',[ServiceController::class,'destroy']);
-    });
+Route::group(['prefix' => 'services'], function () {
+    Route::get('/', [ServiceController::class, 'index']);
+    Route::post('/', [ServiceController::class, 'store']);
+    Route::get('/{id}', [ServiceController::class, 'show']);
+    Route::put('/{id}', [ServiceController::class, 'update']);
+    Route::delete('/{id}', [ServiceController::class, 'destroy']);
+});
 
-    Route::apiResource('rooms', RoomController::class);
-    Route::apiResource('room-images',RoomImageController::class);
+Route::apiResource('rooms', RoomController::class);
+// Route::apiResource('room-images', RoomImageController::class);
+
+
+Route::group(['prefix' => 'room-images'], function () {
+    Route::get('/', [RoomImageController::class, 'index']);
+    Route::post('/', [RoomImageController::class, 'store']);
+    Route::get('/{id}', [RoomImageController::class, 'show']);
+    Route::put('/{id}', [RoomImageController::class, 'update']);
+    Route::delete('/{id}', [RoomImageController::class, 'destroy']);
+});
+Route::group(['prefix' => 'room-services'], function () {
+    Route::get('/', [Hotel_booking_apiRoomServiceControlle::class, 'index']);
+    Route::post('/', [Hotel_booking_apiRoomServiceControlle::class, 'store']);
+    Route::get('/{id}', [Hotel_booking_apiRoomServiceControlle::class, 'show']);
+    Route::put('/{id}', [Hotel_booking_apiRoomServiceControlle::class, 'update']);
+    Route::delete('/{id}', [Hotel_booking_apiRoomServiceControlle::class, 'destroy']);
+});
+
+
+Route::apiResource('hotel_images', HotelImageController::class);
+Route::apiResource('comments', CommentController::class);
+Route::apiResource('bookings', BookingController::class);

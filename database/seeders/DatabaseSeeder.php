@@ -19,12 +19,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            // Các seeder khác...
             CategorySeeder::class,
+            UserSeeder::class,
             RoomSeeder::class,
             HotelImageSeeder::class,
             RoomImageSeeder::class,
-            UserSeeder::class,
+            ServiceSeeder::class,
+            RoomServiceSeede::class,
             CommentSeeder::class,
             BookingSeeder::class,
         ]);
