@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
         $faker = Faker::create();
         for ($i = 0; $i < 5; $i++) {
             Users::create([
-                'role' => 'User',
                 'name' => $faker->userName(),
                 'email' => $faker->unique()->safeEmail(),
                 'password' => bcrypt('password'),
