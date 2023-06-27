@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class comments extends Model
+class categories extends Model
 {
     use HasFactory;
-    protected $comments = 'comments';
+    protected $categories = 'categories';
     protected $fillable = [
-        "content",
-        "room_id",
-        "user_id"
+        'name'
     ];
 
+    function rooms(){
+        return $this->hasMany(Room::class);
+        
+    }
 }

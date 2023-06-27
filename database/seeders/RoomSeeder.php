@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\categories;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Hotel;
-use App\Models\TypeRoom;
 use App\Models\Room;
 use Faker\Factory as Faker;
 
@@ -19,15 +18,14 @@ class RoomSeeder extends Seeder
         $faker = Faker::create();
 
         // Lấy danh sách type rooms và hotels
-        $typeRooms = TypeRoom::pluck('id')->all();
-        $hotels = Hotel::pluck('id')->all();
+        $typeRooms = categories::pluck('id')->all();
         // Tạo dữ liệu giả cho 50 phòng
         for ($i = 0; $i <50; $i++) {
             Room::create([
-                'type_room_id' => $faker->randomElement($typeRooms),
-                'hotel_id' => $faker->randomElement($hotels),
+                'category_id' => $faker->randomElement($typeRooms),
                 'name' => $faker->word(),
                 'price' => $faker->randomFloat(2, 50, 500),
+                'star' => $faker->randomNumber(1,5),
                 'desc' => $faker->paragraph(),
                 'status' => $faker->boolean(),
             ]);

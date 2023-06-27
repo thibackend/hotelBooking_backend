@@ -16,6 +16,7 @@ class BookingSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+<<<<<<< HEAD
         $user_ids = Users::pluck('id')->all();
         // Tạo dữ liệu giả cho 100 bookings
         $hotel_ids = Hotel::pluck('id')->all();
@@ -38,6 +39,24 @@ class BookingSeeder extends Seeder
                     'check_out_date' => $check_out_date,
                 ]);
             }
+=======
+        $userIds = Users::pluck('id')->all();
+
+        // Tạo dữ liệu giả cho 100 đặt phòng
+        for ($i = 0; $i < 10; $i++) {
+            $roomId = $faker->randomElement(Room::pluck('id')->all());
+            $userId = $faker->randomElement($userIds);
+            $bookingDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
+            $checkOutDate = Carbon::parse($bookingDate)->addDays($faker->numberBetween(1, 7))->format('Y-m-d');
+
+            Booking::create([
+                'room_id' => $roomId,
+                'user_id' => $userId,
+                'booking_date' => $bookingDate,
+                'checkin_date' => $bookingDate,
+                'checkout_date' => $checkOutDate,
+            ]);
+>>>>>>> a8c542b0c0e90fe69db12da9146fd5b71acacdb4
         }
     }
 }
