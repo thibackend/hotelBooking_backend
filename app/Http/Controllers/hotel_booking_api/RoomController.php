@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hotel;
 use App\Models\Room;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Test\TestStubForIntersectionOfInterfacesCreated;
 
 class RoomController extends Controller
 {
@@ -16,8 +14,6 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        foreach ($rooms as $key => $value) {
-        }
         return response()->json($rooms);
     }
 
@@ -59,15 +55,17 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        $room = new Room();
-        $room->type_room_id = $request->input("type_room_id");
-        $room->hotel_id = $request->input("hotel_id");
-        $room->name = $request->input("name");
-        $room->price = $request->input("price");
-        $room->desc = $request->input("desc");
-        $room->status = $request->input("status");
-        $room->save();
-        return response()->json(["msg" => "Add successful", "data" => $room]);
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'name' => 'required|string',
+            'desc' => 'nullable|string',
+            'star' => 'required|integer',
+            'status' => 'required|boolean',
+        ]);
+
+        $room = Room::create($request->all());
+        return response()->json($room, 201);
     }
 
     /**
@@ -75,7 +73,7 @@ class RoomController extends Controller
      */
     public function show(string $id)
     {
-        $room = Room::find($id);
+        $room = Room::findOrFail($id);
         return response()->json($room);
     }
 
@@ -84,15 +82,19 @@ class RoomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $room = Room::find($id);
-        $room->type_room_id = $request->input("type_room_id");
-        $room->hotel_id = $request->input("hotel_id");
-        $room->name = $request->input("name");
-        $room->price = $request->input("price");
-        $room->desc = $request->input("desc");
-        $room->status = $request->input("status");
-        $room->save();
-        return response()->json(["msg" => "update successful", "data" => $room]);
+        $request->validate([
+            'category_id' => 'exists:categories,id',
+            'price' => 'numeric',
+            'name' => 'string',
+            'desc' => 'nullable|string',
+            'star' => 'integer',
+            'status' => 'boolean',
+        ]);
+
+        $room = Room::findOrFail($id);
+        $room->update($request->all());
+
+        return response()->json($room);
     }
 
     /**
@@ -100,8 +102,8 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        $room = Room::find($id);
+        $room = Room::findOrFail($id);
         $room->delete();
-        return response()->json(["msg" => "Delete successful", "data" => $room]);
+        return response()->json(null, 204);
     }
 }

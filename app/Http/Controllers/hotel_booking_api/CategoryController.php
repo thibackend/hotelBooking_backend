@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
+use App\Models\categories;
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Booking::all();
+        $categories = categories::all();
+        return response()->json($categories);
     }
 
     /**
@@ -21,10 +22,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $booking = Booking::create(
-            $request->all()
-        );
-        return $booking;
+        $category = categories::create($request->all());
+        return response()->json($category, 201);
     }
 
     /**
@@ -32,8 +31,8 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        $booking = Booking::findOrFail($id);
-        return $booking;
+        $category = categories::findOrFail($id);
+        return response()->json($category);
     }
 
     /**
@@ -41,9 +40,9 @@ class BookingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $booking = Booking::findOrFail($id);
-        $bookinng =$booking->update($request->all());
-        return $booking;
+        $category = categories::findOrFail($id);
+        $category->update($request->all());
+        return response()->json($category);
     }
 
     /**
@@ -51,9 +50,7 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        $booking = Booking::findOrFail($id);
-        $delete =$booking ->delete();
-        return response()->json($delete);
-        
+        categories::findOrFail($id)->delete();
+        return response()->json(['message' => 'Category deleted successfully']);
     }
 }

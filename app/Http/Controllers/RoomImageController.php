@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hotel_booking_api;
 use App\Http\Controllers\Controller;
 use App\Models\room_images;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class RoomImageController extends Controller
 {
@@ -13,18 +14,8 @@ class RoomImageController extends Controller
      */
     public function index()
     {
-        // Retrieve all room images
-        $roomImages = room_images::all();
-
-        return response()->json($roomImages);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $image = room_images::all();
+        return response()->json($image);
     }
 
     /**
@@ -32,7 +23,6 @@ class RoomImageController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate and create a new room image
         $request->validate([
             'room_id' => 'required|exists:rooms,id',
             'image_path' => 'required|string',
@@ -46,6 +36,7 @@ class RoomImageController extends Controller
         ]);
 
         return response()->json($roomImage, 201);
+
     }
 
     /**
@@ -53,18 +44,10 @@ class RoomImageController extends Controller
      */
     public function show(string $id)
     {
-        // Retrieve a specific room image by ID
-        $roomImage = room_images::findOrFail($id);
+       // Retrieve a specific room image by ID
+       $roomImage = room_images::findOrFail($id);
 
-        return response()->json($roomImage);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+       return response()->json($roomImage);
     }
 
     /**
@@ -83,9 +66,11 @@ class RoomImageController extends Controller
         $roomImage->update([
             'room_id' => $request->room_id,
             'image_path' => $request->image_path,
-            'desc' => $request->desc
+            'desc' => $request->desc,
         ]);
+
         return response()->json($roomImage);
+
     }
 
     /**
@@ -93,10 +78,10 @@ class RoomImageController extends Controller
      */
     public function destroy(string $id)
     {
-        // Delete a specific room image by ID
-        $roomImage = room_images::findOrFail($id);
-        $roomImage->delete();
+       // Delete a specific room image by ID
+       $roomImage = room_images::findOrFail($id);
+       $roomImage->delete();
 
-        return response()->json(['message' => 'Room image deleted successfully']);
+       return response()->json(['message' => 'Room image deleted successfully']);
     }
 }
