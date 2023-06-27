@@ -4,10 +4,33 @@ namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\room_images;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
+
+    // get image and room;
+    public function getRoomImages()
+    {
+        $rooms = Room::all();
+        $rooms_and_images = [];
+        foreach ($rooms as $key => $value) {
+            $image  = room_images::where("room_id", $value['id'])->pluck('image_path')->all();
+            $setdata = [
+                "id"=>$value['id'],
+                "category_id"=>$value['category_id'],
+                "price"=>$value['price'],
+                "name"=>$value['name'],
+                "desc"=>$value['desc'],
+                "star"=>$value['star'],
+                "status"=>$value['status'],
+                "image_path"=>$image
+            ];
+            array_push($rooms_and_images,$setdata);
+        }
+        return response()->json($rooms_and_images);
+    }
     /**
      * Display a listing of the resource.
      */
