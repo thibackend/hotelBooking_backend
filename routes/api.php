@@ -129,6 +129,10 @@ Route::group(['prefix' => 'services'], function () {
 
 Route::apiResource('rooms', RoomController::class);
 // Route::apiResource('room-images', RoomImageController::class);
+Route::controller(RoomController::class)  // xữ lý xong
+    ->group(function () {
+        Route::get('/room-and-images', "getRoomImages");
+    });
 
 
 Route::group(['prefix' => 'room-images'], function () {
@@ -138,6 +142,16 @@ Route::group(['prefix' => 'room-images'], function () {
     Route::put('/{id}', [RoomImageController::class, 'update']);
     Route::delete('/{id}', [RoomImageController::class, 'destroy']);
 });
+
+
+
+
+
+
+
+
+
+
 Route::group(['prefix' => 'room-services'], function () {
     Route::get('/', [Hotel_booking_apiRoomServiceControlle::class, 'index']);
     Route::post('/', [Hotel_booking_apiRoomServiceControlle::class, 'store']);
@@ -148,5 +162,6 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
+
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
