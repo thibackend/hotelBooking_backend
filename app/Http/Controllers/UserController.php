@@ -12,10 +12,13 @@ class UserController extends Controller
 {
 
 
-    public function index() {
+    public function index()
+    {
         $users = Users::all();
         return response()->json($users);
     }
+
+
     public function register(Request $request)
     {
         $request->validate([
@@ -23,17 +26,17 @@ class UserController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string',
         ]);
+
         $user = Users::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
             'image' => $request->image,
             'address' => $request->address,
             'phone' => $request->phone,
             'status' => $request->status
         ]);
-        return response()->json(['message' => 'User registered successfully']);
+        return response()->json(['message' => 'User registered successfully',"user"=>$user]);
     }
 
     public function login(Request $request)
