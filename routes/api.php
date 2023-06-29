@@ -77,17 +77,19 @@ Route::controller(TypeRoomController::class)  // xữ lý xong
     });
 
 // Route::post('/login', [AuthController::class, 'Login']);
+
 // Route::any('{any}', [ApiController::class, 'NotFound'])->where('any', '.*');
 
+// Route::group(['middleware' => 'auth.jwt'], function () {
+//     // Protected routes
+//     // ...
 
 // User Registration
 Route::post('/register', [UserController::class, 'register']);
 
 // User Login
 Route::post('/login', [UserController::class, 'login']);
-// Route::group(['middleware' => 'auth.jwt'], function () {
-//     // Protected routes
-//     // ...
+
 
 
 // });
@@ -144,7 +146,6 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
-
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
 
