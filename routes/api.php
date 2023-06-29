@@ -14,7 +14,7 @@ use App\Http\Controllers\hotel_booking_api\InforUserController;
 use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
-
+use App\Http\Controllers\DetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ Route::group(['prefix' => 'services'], function () {
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
 
-Route::apiResource('rooms', RoomController::class);
+//Route::apiResource('rooms', RoomController::class);
 // Route::apiResource('room-images', RoomImageController::class);
 Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
@@ -134,14 +134,6 @@ Route::group(['prefix' => 'room-images'], function () {
 });
 
 
-
-
-
-
-
-
-
-
 Route::group(['prefix' => 'room-services'], function () {
     Route::get('/', [Hotel_booking_apiRoomServiceControlle::class, 'index']);
     Route::post('/', [Hotel_booking_apiRoomServiceControlle::class, 'store']);
@@ -155,3 +147,6 @@ Route::apiResource('hotel_images', HotelImageController::class);
 
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
+
+// Detail Room
+Route::get('/rooms/{roomId}', [DetailController::class, 'index']);
