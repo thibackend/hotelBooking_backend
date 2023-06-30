@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
+use App\Models\Services;
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Booking::all();
+        $services = Services::all();
+        return response()->json($services);
     }
 
     /**
@@ -21,10 +22,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $booking = Booking::create(
-            $request->all()
-        );
-        return $booking;
+        $service = Services::create($request->all());
+        return response()->json($service, 201);
     }
 
     /**
@@ -32,8 +31,8 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        $booking = Booking::findOrFail($id);
-        return $booking;
+        $service = Services::findOrFail($id);
+        return response()->json($service);
     }
 
     /**
@@ -41,9 +40,9 @@ class BookingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $booking = Booking::findOrFail($id);
-        $bookinng =$booking->update($request->all());
-        return $booking;
+        $service = Services::findOrFail($id);
+        $service->update($request->all());
+        return response()->json($service);
     }
 
     /**
@@ -51,9 +50,7 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        $booking = Booking::findOrFail($id);
-        $delete =$booking ->delete();
-        return response()->json($delete);
-        
+        Services::findOrFail($id)->delete();
+        return response()->json(['message' => 'Service deleted successfully']);
     }
 }

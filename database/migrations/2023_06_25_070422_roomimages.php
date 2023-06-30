@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hotel_images', function (Blueprint $table) {
+        Schema::create('room_images', function (Blueprint $table) {
             $table->id();
-            $table->string("image");
-            $table->unsignedBigInteger("hotel_id");
-            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete("cascade");
+            $table->integer("room_id")->unsigned();
+            $table->string('image_path');
+            $table->string('desc');
             $table->timestamps();
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('hotel_images');
+        Schema::dropIfExists('room_images');
     }
 };

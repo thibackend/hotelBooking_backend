@@ -84,3 +84,4 @@ class UserController extends Controller
         return response()->json(["msg"=>"Delete successful",$users]);
     }
 }
+
