@@ -11,7 +11,7 @@ use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\hotel_booking_api\InforUserController;
-use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
+use App\Http\Controllers\hotel_booking_api\RoomServiceControlle ;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
 
@@ -140,11 +140,21 @@ Route::controller(RoomController::class)  // xữ lý xong
 Route::group(['prefix' => 'room-images'], function () {
     Route::get('/', [RoomImageController::class, 'index']);
     Route::post('/', [RoomImageController::class, 'store']);
+    Route::post('/', [RoomImageController::class, 'upload'])->name('room-images');
     Route::get('/{id}', [RoomImageController::class, 'show']);
     Route::put('/{id}', [RoomImageController::class, 'update']);
     Route::delete('/{id}', [RoomImageController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'room-service'], function () {
+    Route::get('/', [RoomServiceControlle::class, 'index']);
+    Route::post('/', [RoomServiceControlle::class, 'store']);
+    Route::get('/{id}', [RoomServiceControlle::class, 'show']);
+    Route::put('/{id}', [RoomServiceControlle::class, 'update']);
+    Route::delete('/{id}', [RoomServiceControlle::class, 'destroy']);
+});
+
+Route::post('/create-room', [RoomController::class, 'createRoom']);
 
 
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Models\room_images;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class RoomController extends Controller
 {
 
@@ -129,4 +129,54 @@ class RoomController extends Controller
         $room->delete();
         return response()->json(null, 204);
     }
+    public function createRoom(Request $request){
+// Validate dữ liệu
+$validator = Validator::make($request->all(), [
+    'category_id' => 'required',
+    'price' => 'required',
+    'name' => 'required',
+    'desc' => 'required',
+    'star' => 'required',
+    'status' => 'required',
+    'images' => 'required|array|max:3',
+    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+]);
+
+// Kiểm tra nếu có lỗi trong validate
+if ($validator->fails()) {
+    return redirect()->back()->withErrors($validator)->withInput();
+}
+
+// Tạo và lưu phòng mới
+$room = new Room();
+$room->category_id = $request->input('category_id');
+$room->price = $request->input('price');
+$room->name = $request->input('name');
+$room->desc = $request->input('desc');
+$room->star = $request->input('star');
+$room->status = $request->input('status');
+$room->save();
+
+// Lấy ID phòng vừa được lưu
+$roomId = $room->id;
+
+// Lưu hình ảnh
+if ($request->hasFile('images')) {
+    $images = $request->file('images');
+    foreach ($images as $image) {
+        // Lưu hình ảnh vào thư mục public/images
+        $imagePath = $image->store('public/images');
+
+        // Lưu thông tin hình ảnh vào bảng room_images
+        $roomImage = new room_images();
+        $roomImage->room_id = $roomId;
+        $roomImage->image_path = $imagePath;
+        $roomImage->save();
+    }
+}
+
+return redirect()->back()->with('success', 'Thêm phòng thành công!');
+}
+
+
 }
