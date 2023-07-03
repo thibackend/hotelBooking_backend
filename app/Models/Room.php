@@ -21,8 +21,13 @@ class Room extends Model
     {
         return $this->hasMany(room_images::class);
     }
-    public function categories()
+    public function Categories()
     {
         return $this->belongsTo(categories::class);
     }
+
+    public function Services() {
+        return $this->hasMany(RoomService::class);
+    }
+
 }
