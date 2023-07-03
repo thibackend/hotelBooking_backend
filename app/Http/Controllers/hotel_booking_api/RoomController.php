@@ -83,12 +83,11 @@ class RoomController extends Controller
             'price' => 'required|numeric',
             'name' => 'required|string',
             'desc' => 'nullable|string',
-            'star' => 'required|integer',
-            'status' => 'required|boolean',
+            'star' => 'nullable|integer',
+            'status' => 'nullable|boolean',
         ]);
-
         $room = Room::create($request->all());
-        return response()->json($room, 201);
+        return response()->json($room);
     }
 
     /**

@@ -124,6 +124,11 @@ Route::group(['prefix' => 'services'], function () {
 Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/room-and-images', "getRoomImages");
+        Route::get('/rooms', "index");
+        Route::get('/rooms/{id}', "show");
+        Route::post('/rooms', 'store');
+        Route::put('/rooms/{id}', 'update');
+        Route::delete('/rooms/{id}', 'destroy');
     });
 
 
@@ -150,4 +155,4 @@ Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
 
 // Detail Room
-Route::get('/rooms/{roomId}', [DetailController::class, 'index']);
+Route::get('/rooms-detail/{roomId}', [DetailController::class, 'index']);
