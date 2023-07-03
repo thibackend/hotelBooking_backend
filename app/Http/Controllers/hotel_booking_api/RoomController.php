@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\hotel_booking_api;
-
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Models\room_images;
 use Illuminate\Http\Request;
+use App\Models\RoomService;
 use Illuminate\Support\Facades\Validator;
 class RoomController extends Controller
 {
@@ -129,54 +130,77 @@ class RoomController extends Controller
         $room->delete();
         return response()->json(null, 204);
     }
-    public function createRoom(Request $request){
-// Validate dữ liệu
-$validator = Validator::make($request->all(), [
-    'category_id' => 'required',
-    'price' => 'required',
-    'name' => 'required',
-    'desc' => 'required',
-    'star' => 'required',
-    'status' => 'required',
-    'images' => 'required|array|max:3',
-    'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
-]);
+    
 
-// Kiểm tra nếu có lỗi trong validate
-if ($validator->fails()) {
-    return redirect()->back()->withErrors($validator)->withInput();
-}
-
-// Tạo và lưu phòng mới
-$room = new Room();
-$room->category_id = $request->input('category_id');
-$room->price = $request->input('price');
-$room->name = $request->input('name');
-$room->desc = $request->input('desc');
-$room->star = $request->input('star');
-$room->status = $request->input('status');
-$room->save();
-
-// Lấy ID phòng vừa được lưu
-$roomId = $room->id;
-
-// Lưu hình ảnh
-if ($request->hasFile('images')) {
+    public function createRoom(Request $request)
+    {
+        // Validate dữ liệu
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'name' => 'required|string',
+            'desc' => 'nullable|string',
+            'star' => 'required|integer',
+            'status' => 'required|boolean',
+            'images' => 'required|array|max:3',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'services' => 'required|array', // Add this line
+            'services.*' => 'required|exists:services,id', // Add this line
+        ]);
+    
+        // Kiểm tra lỗi validation
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+    
+        try {
+            // Tạo và lưu phòng mới
+            $room = new Room();
+            $room->category_id = $request->input('category_id');
+            $room->price = $request->input('price');
+            $room->name = $request->input('name');
+            $room->desc = $request->input('desc');
+            $room->star = $request->input('star');
+            $room->status = $request->input('status');
+            $room->save();
+    
+            // Lấy ID phòng vừa được lưu
+            $roomId = $room->id;
+    
+           // Lưu hình ảnh
+    if ($request->hasFile('images')) {
     $images = $request->file('images');
     foreach ($images as $image) {
-        // Lưu hình ảnh vào thư mục public/images
-        $imagePath = $image->store('public/images');
+        // Tạo tên mới cho hình ảnh
 
+        $nameImage=$image->getClientOriginalName();
+        // Di chuyển hình ảnh vào thư mục public/images
+        $image->move(public_path('uploads/images'), $nameImage);
+        
         // Lưu thông tin hình ảnh vào bảng room_images
         $roomImage = new room_images();
         $roomImage->room_id = $roomId;
-        $roomImage->image_path = $imagePath;
+        $roomImage->image_path = $nameImage;
         $roomImage->save();
     }
 }
+    //Lưu services:
+    foreach ($request->input('services') as $serviceId) {
+        $roomService = new RoomService();
+        $roomService->room_id = $roomId;
+        $roomService->service_id = $serviceId;
+        $roomService->save();
+    }
 
-return redirect()->back()->with('success', 'Thêm phòng thành công!');
-}
+    
+            return response()->json($room, 201);
+        } catch (\Exception $e) {
+            // Ghi lại lỗi vào logs hoặc hiển thị thông báo lỗi
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to add room'], 500);
+        }
+    }
+    
 
 
 }

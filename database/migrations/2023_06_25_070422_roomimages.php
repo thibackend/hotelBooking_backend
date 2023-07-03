@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer("room_id")->unsigned();
             $table->string('image_path');
-            $table->string('desc')->default('');
+            $table->string('desc')->nullable();
             $table->timestamps();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
         });
