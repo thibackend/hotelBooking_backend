@@ -91,7 +91,6 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
 
-
 // });
 Route::controller(Hotel_booking_apiUserInforController::class) //xữ lý xong
     ->group(function () {
