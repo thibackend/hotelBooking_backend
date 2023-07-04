@@ -168,3 +168,6 @@ Route::group(['prefix' => 'comments'], function () {
     Route::put('/{id}', [ServiceController::class, 'update']);
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
+
+Route::post('/create-room', [RoomController::class, 'createRoom']);
+Route::get('/room-service', [RoomServiceControlle::class, 'getRoomServices']);
