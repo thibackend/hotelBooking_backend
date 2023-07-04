@@ -136,7 +136,7 @@ Route::controller(RoomController::class)  // xữ lý xong
         Route::get('/getOne-room-and-images/{id}', 'getOneRoomImage');
 
         // route này dùng để lấy tất cả các services theo room id.
-        Route::get('/get-room-with-services/{room_id}','getRoomWithServiecs');
+        Route::get('/get-room-with-services/{room_id}', 'getRoomWithServiecs');
     });
 
 Route::group(['prefix' => 'room-images'], function () {

@@ -43,10 +43,13 @@ class RoomController extends Controller
         $category = categories::find($rooms->category_id);
         $rooms_and_images = [];
         $image  = room_images::where("room_id", $id)->pluck('image_path')->all();
+        $services_id = RoomService::where("room_id", $id)->pluck('service_id')->all();
+        $services= Services::whereIn('id', $services_id)->get();
         $setdata = [
             "id" => $id,
             "category_id" => $rooms->category_id,
             "category_name" => $category,
+            "services"=>$services,
             "price" => $rooms->price,
             "name" => $rooms->name,
             "desc" => $rooms->desc,
@@ -65,10 +68,10 @@ class RoomController extends Controller
         $room = Room::find($id);
         //lấy tất cả service mà có id room = $id từ trong bảng room services.
         $services_id = RoomService::where('room_id', $id)->pluck('service_id')->all();
-        $services = Services::whereIn('id',$services_id)->get();
+        $services = Services::whereIn('id', $services_id)->get();
         $roomAndServices = [
-            "room"=>$room,
-            "services"=>$services
+            "room" => $room,
+            "services" => $services
         ];
         return response()->json($roomAndServices);
     }
