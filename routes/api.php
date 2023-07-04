@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CommentController as ControllersCommentController;
 use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\CategoryController;
-use App\Http\Controllers\hotel_booking_api\CommentController;
+use App\Http\Controllers\hotel_booking_api\ReviewRoomController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
@@ -66,15 +67,6 @@ use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_
 
 
 
-
-// Route::controller(CommentController::class)
-//     ->group(function () {
-//         Route::get('/comments', "index");
-//         Route::get('/comments/{id}', 'show');
-//         Route::post('/comments', "store");
-//         Route::put('/comments/{id}', 'update');
-//         Route::delete('/comments/{id}', 'destroy');
-//     });
 
 
 // Route::controller(BookingController::class)
@@ -146,14 +138,6 @@ Route::group(['prefix' => 'room-images'], function () {
 });
 
 
-
-
-
-
-
-
-
-
 Route::group(['prefix' => 'room-services'], function () {
     Route::get('/', [Hotel_booking_apiRoomServiceControlle::class, 'index']);
     Route::post('/', [Hotel_booking_apiRoomServiceControlle::class, 'store']);
@@ -164,5 +148,11 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
-Route::apiResource('comments', CommentController::class);
+// Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
+
+Route::get('/get-user',[ApiController::class,"getUser"]);
+
+
+Route::post('/comments', [ReviewRoomController::class, 'store']);
+Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);

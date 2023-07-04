@@ -25,4 +25,7 @@ class Room extends Model
     {
         return $this->belongsTo(categories::class);
     }
+    public function comment(){
+        return $this -> hasMany(comments::class);
+    }
 }
