@@ -15,7 +15,7 @@ use App\Http\Controllers\hotel_booking_api\InforUserController;
 use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
-
+use App\Models\RoomService;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +68,15 @@ use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_
 
 
 
+// Route::controller(CommentController::class)
+//     ->group(function () {
+//         Route::get('/comments', "index");
+//         Route::get('/comments/{id}', 'show');
+//         Route::post('/comments', "store");
+//         Route::put('/comments/{id}', 'update');
+//         Route::delete('/comments/{id}', 'destroy');
+//     });
+
 
 // Route::controller(BookingController::class)
 //     ->group(function () {
@@ -91,7 +100,6 @@ Route::post('/register', [UserController::class, 'register']);
 
 // User Login
 Route::post('/login', [UserController::class, 'login']);
-
 
 
 // });
@@ -121,13 +129,26 @@ Route::group(['prefix' => 'services'], function () {
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
 
-Route::apiResource('rooms', RoomController::class);
+//Route::apiResource('rooms', RoomController::class);
 // Route::apiResource('room-images', RoomImageController::class);
 Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/room-and-images', "getRoomImages");
-    });
+        Route::get('/rooms', "index");
+        Route::get('/rooms/{id}', "show");
+        Route::post('/rooms', 'store');
+        Route::put('/rooms/{id}', 'update');
+        Route::delete('/rooms/{id}', 'destroy');
 
+        // route này dùng để lấy tất cả các room để show ra trang giao diện
+        Route::get('/room-and-images', "getRoomImages");
+
+        // route này dùng để lấy một room và ảnh của nó để thực hiện show ra chi tiết.
+        Route::get('/getOne-room-and-images/{id}', 'getOneRoomImage');
+
+        // route này dùng để lấy tất cả các services theo room id.
+        Route::get('/get-room-with-services/{room_id}','getRoomWithServiecs');
+    });
 
 Route::group(['prefix' => 'room-images'], function () {
     Route::get('/', [RoomImageController::class, 'index']);
@@ -148,11 +169,5 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
-// Route::apiResource('comments', CommentController::class);
+Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
-
-Route::get('/get-user',[ApiController::class,"getUser"]);
-
-
-Route::post('/comments', [ReviewRoomController::class, 'store']);
-Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);

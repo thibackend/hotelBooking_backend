@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('price');
             $table->string('name');
             $table->text('desc')->nullable();
-            $table->integer('star');
-            $table->boolean('status');
+            $table->integer('star')->nullable();
+            $table->boolean('status')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
