@@ -169,5 +169,19 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
+
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
+Route::apiResource('bookings', BookingController::class);
+
+
+Route::group(['prefix' => 'comments'], function () {
+    Route::get('/', [ServiceController::class, 'index']);
+    Route::post('/', [ServiceController::class, 'store']);
+    Route::get('/{id}', [ServiceController::class, 'show']);
+    Route::put('/{id}', [ServiceController::class, 'update']);
+    Route::delete('/{id}', [ServiceController::class, 'destroy']);
+});
+
+Route::post('/create-room', [RoomController::class, 'createRoom']);
+Route::get('/room-service', [RoomServiceControlle::class, 'getRoomServices']);

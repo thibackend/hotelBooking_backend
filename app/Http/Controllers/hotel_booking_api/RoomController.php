@@ -9,7 +9,7 @@ use App\Models\room_images;
 use App\Models\RoomService;
 use App\Models\Services;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class RoomController extends Controller
 {
 
@@ -172,7 +172,93 @@ class RoomController extends Controller
     public function destroy(string $id)
     {
         $room = Room::findOrFail($id);
+         // Xóa hình ảnh liên quan ở trong folder
+         $roomImages = room_images::where('room_id', $id)->get();
+         foreach ($roomImages as $roomImage) {
+             // Xóa file từ thư mục
+             $imagePath = public_path('uploads/images/' . $roomImage->image_path);
+             if (file_exists($imagePath)) {
+                 unlink($imagePath);
+             }
+         }
+ 
         $room->delete();
         return response()->json(null, 204);
     }
+
+    public function createRoom(Request $request)
+    {
+        // Validate dữ liệu
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'name' => 'required|string',
+            'desc' => 'nullable|string',
+            'images' => 'required|array|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'services' => 'required|array', 
+            'services.*' => 'required|exists:services,id', 
+        ]);
+   
+        // Kiểm tra lỗi validation
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+   
+        try {
+            // Tạo và lưu phòng mới
+            $room = new Room();
+            $room->category_id = $request->input('category_id');
+            $room->price = $request->input('price');
+            $room->name = $request->input('name');
+            $room->desc = $request->input('desc');
+            $room->star = 0;
+            $room->status =0;
+            $room->save();
+   
+            // Lấy ID phòng vừa được lưu
+            $roomId = $room->id;
+   
+           // Lưu hình ảnh
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                // Tạo tên mới cho hình ảnh
+                $nameImage=$image->getClientOriginalName();
+                // Di chuyển hình ảnh vào thư mục public/images
+                $image->move(public_path('uploads/images'), $nameImage);
+           
+                // Lưu thông tin hình ảnh vào bảng room_images
+                $roomImage = new room_images();
+                $roomImage->room_id = $roomId;
+                $roomImage->image_path = $nameImage;
+                $roomImage->save();}
+        }
+        //Lưu services:
+        foreach ($request->input('services') as $serviceId) {
+            $roomService = new RoomService();
+            $roomService->room_id = $roomId;
+            $roomService->service_id = $serviceId;
+            $roomService->save();
+        }
+
+
+
+
+   
+            return response()->json($room, 201);
+        } catch (\Exception $e) {
+            // Ghi lại lỗi vào logs hoặc hiển thị thông báo lỗi
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to add room'], 500);
+        }
+    }
+   
+
+
+
+
+
+
+
 }
