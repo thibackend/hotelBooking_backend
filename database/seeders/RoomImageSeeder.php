@@ -17,14 +17,12 @@ class RoomImageSeeder extends Seeder
 
         // Lấy danh sách rooms và hotels
         $rooms = Room::pluck('id')->all();
-        $hotels = Hotel::pluck('id')->all();
-
         // Tạo dữ liệu giả cho 50 hình ảnh phòng
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             room_images::create([
-                'image' => $faker->imageUrl(),
+                'image_path' => $faker->imageUrl(),
+                'desc' => $faker->paragraph(1,true),
                 'room_id' => $faker->randomElement($rooms),
-                'hotel_id' => $faker->randomElement($hotels),
             ]);
         }
     }

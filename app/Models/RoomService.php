@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Hotel extends Model
+class RoomService extends Model
 {
     use HasFactory;
-    protected $hotels = 'hotels';
+    protected $table = 'rooms_services';
 
-    public function image() {
-        return $this->hasMany(hotel_images::class);
-    }
+    protected $fillable=[
+        "room_id",
+        "service_id"
+    ];
 }

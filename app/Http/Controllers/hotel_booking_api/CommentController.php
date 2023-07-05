@@ -8,65 +8,34 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $comment = comments::all();
-        return response()->json([$comment]);
+        return comments::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $comment = new comments();
-
-        $comment->comment = $request->comment;
-        $comment->hotel_id = $request->hotel_id;
-        $comment->account_id = $request->account_id;
-        if ($comment->save()) {
-            return response()->json(["msg" => "add successful", $comment]);
-        }
-    }
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $comment = comments::find($id);
-        if (!$comment) {
-            return response()->json(["msg" => "comment not found"]);
-        }
-        return response()->json([$comment]);
+        $comment = comments::create($request->all());
+        return $comment;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show($id)
     {
-        $comment = comments::find($id);
-        if (!$comment) {
-            return response()->json(["msg" => "comment not found"]);
-        }
-        $comment->comment = $request->comment;
-        $comment->save();
-        return response()->json(['msg' => "update successfully", $comment]);
+        $comment = comments::findOrFail($id);
+        return $comment;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(Request $request, $id)
     {
-        $comment = comments::find($id);
-        if (!$comment) {
-            return response()->json(["msg" => "comment not found"]);
-        }
+        $comment = comments::findOrFail($id);
+        $comment->update($request->all());
+        return $comment;
+    }
+
+    public function destroy($id)
+    {
+        $comment = comments::findOrFail($id);
         $comment->delete();
-        return response()->json(['msg' => "delete successfully", $comment]);
+        return response()->json(null, 204);
     }
 }
