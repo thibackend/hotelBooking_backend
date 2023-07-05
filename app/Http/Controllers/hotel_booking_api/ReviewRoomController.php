@@ -29,7 +29,6 @@ class ReviewRoomController extends Controller
      */
     public function store(Request $request)
     {
-        
         $user_id=$request->user_id;
         $room_id=$request->room_id;
         $content=$request->content;
