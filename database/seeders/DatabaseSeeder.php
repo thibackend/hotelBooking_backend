@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             CategorySeeder::class,
-            UserSeeder::class,
-            RoomSeeder::class,
-            HotelImageSeeder::class,
-            RoomImageSeeder::class,
+            // UserSeeder::class,
+            // RoomSeeder::class,
+            // HotelImageSeeder::class,
+            // RoomImageSeeder::class,
             ServiceSeeder::class,
-            RoomServiceSeede::class,
-            CommentSeeder::class,
-            BookingSeeder::class,
+            // RoomServiceSeede::class,
+            // CommentSeeder::class,
+            // BookingSeeder::class,
         ]);
     }
 }
