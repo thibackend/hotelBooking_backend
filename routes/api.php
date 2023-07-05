@@ -169,6 +169,11 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
+// Route::apiResource('comments', CommentController::class);
+Route::apiResource('bookings', BookingController::class);
+
+Route::post('/comments', [ReviewRoomController::class, 'store']);
+Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);
 
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
