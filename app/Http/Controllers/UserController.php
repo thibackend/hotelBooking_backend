@@ -26,7 +26,6 @@ class UserController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string',
         ]);
-
         $user = Users::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -51,7 +50,8 @@ class UserController extends Controller
             return response()->json([
                 'token' => $token,
                 'email' => $user->email,
-                'username' => $user->name
+                'username' => $user->name,
+                'avatar' => $user->image
             ]);
         }
         throw ValidationException::withMessages([

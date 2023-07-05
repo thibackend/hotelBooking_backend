@@ -25,6 +25,9 @@ class Room extends Model
     {
         return $this->belongsTo(categories::class);
     }
+    public function comment(){
+        return $this -> hasMany(comments::class);
+    }
 
     public function Services() {
         return $this->hasMany(RoomService::class);

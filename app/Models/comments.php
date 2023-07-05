@@ -14,5 +14,12 @@ class comments extends Model
         "room_id",
         "user_id"
     ];
+    public function user(){
+        return $this -> belongsTo(Users::class);
+    }
+    public function room(){
+        return $this -> belongsTo(Room::class);
+    }
+    
 
 }

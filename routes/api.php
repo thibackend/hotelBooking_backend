@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CommentController as ControllersCommentController;
 use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\CategoryController;
-use App\Http\Controllers\hotel_booking_api\CommentController;
+use App\Http\Controllers\hotel_booking_api\ReviewRoomController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
@@ -67,14 +68,24 @@ use App\Models\RoomService;
 
 
 
-Route::controller(TypeRoomController::class)  // xữ lý xong
-    ->group(function () {
-        Route::get('/type_rooms', "index");
-        Route::get('/type_rooms/{id}', 'show');
-        Route::post('/type_rooms', "store");
-        Route::put('/type_rooms/{id}', 'update');
-        Route::delete('/type_rooms/{id}', 'destroy');
-    });
+// Route::controller(CommentController::class)
+//     ->group(function () {
+//         Route::get('/comments', "index");
+//         Route::get('/comments/{id}', 'show');
+//         Route::post('/comments', "store");
+//         Route::put('/comments/{id}', 'update');
+//         Route::delete('/comments/{id}', 'destroy');
+//     });
+
+
+// Route::controller(BookingController::class)
+//     ->group(function () {
+//         Route::get('/bookings', "index");
+//         Route::get('/bookings/{id}', 'show');
+//         Route::post('/bookings', "store");
+//         Route::put('/bookings/{id}', 'update');
+//         Route::delete('/bookings/{id}', 'destroy');
+//     });
 
 // Route::post('/login', [AuthController::class, 'Login']);
 
@@ -158,13 +169,5 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
+Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
-
-
-Route::group(['prefix' => 'comments'], function () {
-    Route::get('/', [ServiceController::class, 'index']);
-    Route::post('/', [ServiceController::class, 'store']);
-    Route::get('/{id}', [ServiceController::class, 'show']);
-    Route::put('/{id}', [ServiceController::class, 'update']);
-    Route::delete('/{id}', [ServiceController::class, 'destroy']);
-});
