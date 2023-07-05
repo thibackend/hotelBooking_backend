@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CommentController as ControllersCommentController;
 use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\CategoryController;
-use App\Http\Controllers\hotel_booking_api\CommentController;
+use App\Http\Controllers\hotel_booking_api\ReviewRoomController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
@@ -14,7 +15,7 @@ use App\Http\Controllers\hotel_booking_api\InforUserController;
 use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
-
+use App\Models\RoomService;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +102,6 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
 
-
 // });
 Route::controller(Hotel_booking_apiUserInforController::class) //xữ lý xong
     ->group(function () {
@@ -129,13 +129,26 @@ Route::group(['prefix' => 'services'], function () {
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
 
-Route::apiResource('rooms', RoomController::class);
+//Route::apiResource('rooms', RoomController::class);
 // Route::apiResource('room-images', RoomImageController::class);
 Route::controller(RoomController::class)  // xữ lý xong
     ->group(function () {
         Route::get('/room-and-images', "getRoomImages");
-    });
+        Route::get('/rooms', "index");
+        Route::get('/rooms/{id}', "show");
+        Route::post('/rooms', 'store');
+        Route::put('/rooms/{id}', 'update');
+        Route::delete('/rooms/{id}', 'destroy');
 
+        // route này dùng để lấy tất cả các room để show ra trang giao diện
+        Route::get('/room-and-images', "getRoomImages");
+
+        // route này dùng để lấy một room và ảnh của nó để thực hiện show ra chi tiết.
+        Route::get('/getOne-room-and-images/{id}', 'getOneRoomImage');
+
+        // route này dùng để lấy tất cả các services theo room id.
+        Route::get('/get-room-with-services/{room_id}', 'getRoomWithServiecs');
+    });
 
 Route::group(['prefix' => 'room-images'], function () {
     Route::get('/', [RoomImageController::class, 'index']);
@@ -144,14 +157,6 @@ Route::group(['prefix' => 'room-images'], function () {
     Route::put('/{id}', [RoomImageController::class, 'update']);
     Route::delete('/{id}', [RoomImageController::class, 'destroy']);
 });
-
-
-
-
-
-
-
-
 
 
 Route::group(['prefix' => 'room-services'], function () {
@@ -164,5 +169,24 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
+// Route::apiResource('comments', CommentController::class);
+Route::apiResource('bookings', BookingController::class);
+
+Route::post('/comments', [ReviewRoomController::class, 'store']);
+Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);
+
 Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
+Route::apiResource('bookings', BookingController::class);
+
+
+Route::group(['prefix' => 'comments'], function () {
+    Route::get('/', [ServiceController::class, 'index']);
+    Route::post('/', [ServiceController::class, 'store']);
+    Route::get('/{id}', [ServiceController::class, 'show']);
+    Route::put('/{id}', [ServiceController::class, 'update']);
+    Route::delete('/{id}', [ServiceController::class, 'destroy']);
+});
+
+Route::post('/create-room', [RoomController::class, 'createRoom']);
+Route::get('/room-service', [RoomServiceControlle::class, 'getRoomServices']);

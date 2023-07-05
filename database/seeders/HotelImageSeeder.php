@@ -12,7 +12,6 @@ class HotelImageSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-
        // Tạo dữ liệu giả cho các hình ảnh của khách sạn
        for ($i = 0; $i < 10; $i++) {
         hotel_images::create([
@@ -20,5 +19,6 @@ class HotelImageSeeder extends Seeder
             'image_path' => $faker->imageUrl(), // Đường dẫn hình ảnh giả
         ]);
     }
+
     }
 }
