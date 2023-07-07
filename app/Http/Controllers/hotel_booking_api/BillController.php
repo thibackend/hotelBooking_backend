@@ -10,8 +10,10 @@ class BillController extends Controller
 {
 
     // function giúp chèn dữ liệu vào bảng booking và bảng bills.
-
-
+    public function postBookBill(Request $dataBookBill)
+    {
+        return response()->json($dataBookBill->all());
+    }
 
 
 

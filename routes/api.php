@@ -214,7 +214,7 @@ Route::resource('bills', BillController::class);
 // delete: bills/{id}
 
 // tạo ra một phương thức giúp việc chèn vào bảng booking xong thực hiện chèn vào bảng bills.
-Route::post('postBookBill',[BillController::class,'postBookBill'])
+Route::post('postBookBill',[BillController::class,'postBookBill']);
 
 
 // -------------------------------------------------------------------
