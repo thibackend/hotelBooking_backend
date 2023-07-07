@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\CommentController as ControllersCommentController;
+use App\Http\Controllers\hotel_booking_api\BillController;
 use App\Http\Controllers\hotel_booking_api\RoomController;
 use App\Http\Controllers\hotel_booking_api\BookingController;
 use App\Http\Controllers\hotel_booking_api\CategoryController;
@@ -11,11 +11,9 @@ use App\Http\Controllers\hotel_booking_api\ReviewRoomController;
 use App\Http\Controllers\hotel_booking_api\HotelImageController;
 use App\Http\Controllers\hotel_booking_api\RoomImageController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\hotel_booking_api\InforUserController;
 use App\Http\Controllers\hotel_booking_api\RoomServiceControlle as Hotel_booking_apiRoomServiceControlle;
 use App\Http\Controllers\hotel_booking_api\ServiceController;
 use App\Http\Controllers\hotel_booking_api\UserInforController as Hotel_booking_apiUserInforController;
-use App\Models\RoomService;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,8 +204,19 @@ Route::group(['prefix' => 'services'], function () {
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
 
-// lấy services dựa vào id của nó có bao nhiêu id thì sẽ trả về từng đó services
-Route::post('/serviceGetById', [ServiceController::class, 'SelectServiceById']);
+// tạo api cho bills -------------------------------------
+Route::resource('bills', BillController::class);
+// theo resource thì các phương thức ta có thể có đó là : 
+// get :bills 
+// get one: bills/{id}
+// post :bills 
+// put :bills/{id}
+// delete: bills/{id}
 
+// tạo ra một phương thức giúp việc chèn vào bảng booking xong thực hiện chèn vào bảng bills.
+Route::post('postBookBill',[BillController::class,'postBookBill'])
+
+
+// -------------------------------------------------------------------
 Route::post('/create-room', [RoomController::class, 'createRoom']);
 Route::get('/room-service', [RoomServiceControlle::class, 'getRoomServices']);
