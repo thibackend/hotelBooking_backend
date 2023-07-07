@@ -4,6 +4,8 @@ namespace App\Http\Controllers\hotel_booking_api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bills;
+use App\Models\Booking;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -12,11 +14,32 @@ class BillController extends Controller
     // function giúp chèn dữ liệu vào bảng booking và bảng bills.
     public function postBookBill(Request $dataBookBill)
     {
-        return response()->json($dataBookBill->all());
+        $dataBooking = $dataBookBill->all();
+        $booking = Booking::create([
+            "user_id" => $dataBooking['user_id'],
+            "room_id" => $dataBooking['room_id'],
+            "booking_date" => $dataBooking['CheckIn'],
+            "checkin_date" => $dataBooking['CheckIn'],
+            "checkout_date" => $dataBooking['CheckOut']
+        ]);
+        if ($booking) {
+            $room = Room::find($dataBooking['room_id']);
+            $room->status = 0;
+            $room->save();
+        }
+        
+        $bill = Bills::create([
+            'booking_id' => $booking['id'],
+            'services' => json_encode($dataBooking['services']),
+            'room_rate' => $dataBooking['room_rate'],
+            'total_night' => $dataBooking['total_night'],
+            'total' => $dataBooking['total_price'],
+            'payment_method' => $dataBooking['paymentMethod']
+        ]);
+        if ($bill) {
+            return response()->json($bill);
+        }
     }
-
-
-
 
     /**
      * Display a listing of the resource.
