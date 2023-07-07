@@ -169,13 +169,28 @@ Route::group(['prefix' => 'room-services'], function () {
 
 
 Route::apiResource('hotel_images', HotelImageController::class);
-// Route::apiResource('comments', CommentController::class);
+// Route::apiResource('comments',::class);
 Route::apiResource('bookings', BookingController::class);
 
-Route::post('/comments', [ReviewRoomController::class, 'store']);
-Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);
 
-Route::apiResource('comments', CommentController::class);
+// lấy  dữ liệu trong comment thực hiện thêm và show
+Route::group(['prefix' => 'comments'], function () {
+    Route::get('/', [ReviewRoomController::class, 'index']);
+    Route::post('/', [ReviewRoomController::class, 'store']);
+    Route::get('/{room_ID}', [ReviewRoomController::class, 'show']);
+    Route::put('/{id}', [ReviewRoomController::class, 'update']);
+    Route::delete('/{id}', [ReviewRoomController::class, 'destroy']);
+});
+
+
+
+
+
+// __________________________________________________
+// Route::post('/comments', [ReviewRoomController::class, 'store']);
+// Route::get('/comments/{id}', [ReviewRoomController::class, 'show']);
+
+// Route::apiResource('comments', CommentController::class);
 Route::apiResource('bookings', BookingController::class);
 Route::apiResource('bookings', BookingController::class);
 
