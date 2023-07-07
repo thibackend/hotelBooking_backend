@@ -215,7 +215,7 @@ Route::resource('bills', BillController::class);
 
 // tạo ra một phương thức giúp việc chèn vào bảng booking xong thực hiện chèn vào bảng bills.
 Route::post('postBookBill',[BillController::class,'postBookBill']);
-
+Route::post('/serviceGetById', [ServiceController::class, 'SelectServiceById']);
 
 // -------------------------------------------------------------------
 Route::post('/create-room', [RoomController::class, 'createRoom']);
