@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+
+
+    public function SelectServiceById(Request $ServiceIds) {
+        $data =[];
+        foreach ($ServiceIds->all() as $key => $value) {
+            $add = Services::find($value);
+            array_push($data,$add);
+        }
+        return response()->json($data);
+        // return response()->json($ServiceIds->all());
+    }
     /**
      * Display a listing of the resource.
      */

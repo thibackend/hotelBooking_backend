@@ -180,13 +180,17 @@ Route::apiResource('bookings', BookingController::class);
 Route::apiResource('bookings', BookingController::class);
 
 
-Route::group(['prefix' => 'comments'], function () {
+Route::group(['prefix' => 'services'], function () {
     Route::get('/', [ServiceController::class, 'index']);
     Route::post('/', [ServiceController::class, 'store']);
+    // Route::post('/SelecServicesById', [ServiceController::class, 'store']);
     Route::get('/{id}', [ServiceController::class, 'show']);
     Route::put('/{id}', [ServiceController::class, 'update']);
     Route::delete('/{id}', [ServiceController::class, 'destroy']);
 });
+
+// lấy services dựa vào id của nó có bao nhiêu id thì sẽ trả về từng đó services
+Route::post('/serviceGetById', [ServiceController::class, 'SelectServiceById']);
 
 Route::post('/create-room', [RoomController::class, 'createRoom']);
 Route::get('/room-service', [RoomServiceControlle::class, 'getRoomServices']);
