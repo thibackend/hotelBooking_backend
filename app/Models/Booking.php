@@ -16,4 +16,8 @@ class Booking extends Model
         "checkin_date",
         "checkout_date"
     ];
+
+    public function Bills() {
+        return $this->hasOne(Bills::class);
+    }
 }
