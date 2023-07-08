@@ -18,5 +18,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+            CategorySeeder::class,
+            // UserSeeder::class,
+            // RoomSeeder::class,
+            // HotelImageSeeder::class,
+            // RoomImageSeeder::class,
+            ServiceSeeder::class,
+            // RoomServiceSeede::class,
+            // CommentSeeder::class,
+            // BookingSeeder::class,
+        ]);
     }
 }
