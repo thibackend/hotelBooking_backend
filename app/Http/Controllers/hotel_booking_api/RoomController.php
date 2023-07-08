@@ -216,7 +216,7 @@ class RoomController extends Controller
             $room->name = $request->input('name');
             $room->desc = $request->input('desc');
             $room->star = 0;
-            $room->status = 0;
+            $room->status = 1;
             $room->save();
 
             // Lấy ID phòng vừa được lưu
